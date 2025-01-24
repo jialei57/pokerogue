@@ -5,7 +5,8 @@
 	<meta charset="UTF-8" />
 	<title>PokéRogue</title>
 	<meta name="title" content="PokéRogue" />
-	<meta name="description" content="A Pokémon fangame heavily inspired by the roguelite genre. Battle endlessly while gathering stacking items, exploring many different biomes, and reaching Pokémon stats you never thought possible." />
+	<meta name="description"
+		content="A Pokémon fangame heavily inspired by the roguelite genre. Battle endlessly while gathering stacking items, exploring many different biomes, and reaching Pokémon stats you never thought possible." />
 	<meta name="theme-color" content="#da3838" />
 	<meta name="keywords" content="pokerogue, pokemon, roguelite" />
 	<meta name="news_keywords" content="pokerogue, pokemon, roguelite" />
@@ -13,12 +14,14 @@
 	<meta http-equiv="audience" content="General">
 	<meta property="og:title" content="PokéRogue" />
 	<meta property="og:type" content="website" />
-	<meta property="og:description" content="A Pokémon fangame heavily inspired by the roguelite genre. Battle endlessly while gathering stacking items, exploring many different biomes, and reaching Pokémon stats you never thought possible." />
+	<meta property="og:description"
+		content="A Pokémon fangame heavily inspired by the roguelite genre. Battle endlessly while gathering stacking items, exploring many different biomes, and reaching Pokémon stats you never thought possible." />
 	<meta property="og:image" content="https://pokerogue.net/logo512.png" />
 	<meta property="og:url" content="https://pokerogue.net" />
 	<meta property="og:site_name" content="PokéRogue" />
 	<meta property="twitter:title" content="PokéRogue" />
-	<meta property="twitter:description" content="A Pokémon fangame heavily inspired by the roguelite genre. Battle endlessly while gathering stacking items, exploring many different biomes, and reaching Pokémon stats you never thought possible." />
+	<meta property="twitter:description"
+		content="A Pokémon fangame heavily inspired by the roguelite genre. Battle endlessly while gathering stacking items, exploring many different biomes, and reaching Pokémon stats you never thought possible." />
 	<meta property="twitter:image" content="https://pokerogue.net/logo512.png" />
 	<meta property="twitter:card" content="summary" />
 	<meta property="twitter:url" content="https://pokerogue.net" />
@@ -37,31 +40,189 @@
 			src: url('./fonts/pkmnems.ttf') format('truetype');
 		}
 	</style>
-	<link rel="stylesheet" type="text/css" href="./index.css" />
+	<link rel="stylesheet" type="text/css" href="/index.css" />
 	<link rel="manifest" href="./manifest.webmanifest">
-  <script>
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", function () {
-        navigator.serviceWorker.register("./service-worker.js").then(
-          function (registration) {
-            console.log("ServiceWorker registration successful");
-          },
-          function (err) {
-            console.log("ServiceWorker registration failed: ", err);
-          },
-        );
-      });
-    }
+	<script>
+		if ("serviceWorker" in navigator) {
+			window.addEventListener("load", function () {
+				navigator.serviceWorker.register("./service-worker.js").then(
+					function (registration) {
+						console.log("ServiceWorker registration successful");
+					},
+					function (err) {
+						console.log("ServiceWorker registration failed: ", err);
+					},
+				);
+			});
+		}
 
-    window.addEventListener('beforeinstallprompt', e => {
-      // Prevent invasive install prompt (users are still able to install as an app)
-      e.preventDefault();
-    });
-  </script>
+		// window.addEventListener('beforeinstallprompt', e => {
+		// 	// Prevent invasive install prompt (users are still able to install as an app)
+		// 	e.preventDefault();
+		// });
+	</script>
+
+	<script>
+		function toggleFullScreen() {
+			const gameContainer = document.getElementById('app');
+
+			if (!document.fullscreenElement) {
+				if (gameContainer.requestFullscreen) {
+					gameContainer.requestFullscreen();
+				} else if (gameContainer.mozRequestFullScreen) { // Firefox
+					gameContainer.mozRequestFullScreen();
+				} else if (gameContainer.webkitRequestFullscreen) { // Chrome, Safari
+					gameContainer.webkitRequestFullscreen();
+				} else if (gameContainer.msRequestFullscreen) { // IE/Edge
+					gameContainer.msRequestFullscreen();
+				}
+			} else {
+				if (document.exitFullscreen) {
+					document.exitFullscreen();
+				} else if (document.mozCancelFullScreen) {
+					document.mozCancelFullScreen();
+				} else if (document.webkitExitFullscreen) {
+					document.webkitExitFullscreen();
+				} else if (document.msExitFullscreen) {
+					document.msExitFullscreen();
+				}
+			}
+		}
+	</script>
 </head>
 
 <body>
-	<div id="app"></div>
+	<!-- Top Navigation Bar -->
+	<header class="navbar">
+		<div class="container">
+			<div class="logo">
+				<img src="./logo128.png" alt="PokéRogue Logo">
+				<div style="font-size: 22px; font-weight: bold;">PokéRogue</div>
+			</div>
+			<!-- <nav>
+				<ul>
+					<li><a href="#">Home</a></li>
+					<li><a href="#">About</a></li>
+					<li><a href="#">Contact</a></li>
+				</ul>
+			</nav> -->
+		</div>
+	</header>
+
+	<div style="width: 80%">
+		<script async
+			src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6954218557768085"
+			crossorigin="anonymous"></script>
+		<!-- top-1 -->
+		<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6954218557768085"
+			data-ad-slot="9558893926" data-ad-format="auto" data-full-width-responsive="true"></ins>
+		<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	</div>
+
+	<div class="content">
+		<div class="game-container">
+			<div id="app"></div>
+		</div>
+	</div>
+
+	<div>
+		<button class="fullscreen-btn" onclick="toggleFullScreen()">
+			<img src="./fullscreen.png" alt="Fullscreen" class="fullscreen-icon">
+		</button>
+	</div>
+
+	<div style="width: 80%">
+		<script async
+			src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6954218557768085"
+			crossorigin="anonymous"></script>
+		<!-- top-1 -->
+		<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6954218557768085"
+			data-ad-slot="9558893926" data-ad-format="auto" data-full-width-responsive="true"></ins>
+		<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	</div>
+
+	<div class="instructions">
+		<p style="padding-bottom: 10px; font-weight: bold;">Main Game control:</p>
+		<p style="padding-bottom: 4px">Select: Use ENTER or SPACE key to skip dialogue or select the active cursor.</p>
+		<p style="padding-bottom: 4px">Movement: Use the arrow keys or WASD to move your character.</p>
+		<p style="padding-bottom: 4px">Interaction: Press the 'Z' key to interact with objects or confirm selections.</p>
+		<p style="padding-bottom: 4px">Menu Access: Press the 'X' key to cancel actions or open the game menu.</p>
+		<p>Settings: You can customize controls in the Settings menu under Keyboard/Gamepad options.</p>
+	</div>
+
+	<div style="width: 80%">
+		<script async
+			src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6954218557768085"
+			crossorigin="anonymous"></script>
+		<!-- top-1 -->
+		<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6954218557768085"
+			data-ad-slot="9558893926" data-ad-format="auto" data-full-width-responsive="true"></ins>
+		<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	</div>
+
+	<div class="sidebar">
+		<!-- <div class="ads">Ads</div> -->
+		<div class="related-games">
+			<p style="font-size: 20px; font-weight: bold; width: 100%; text-align: left; padding-left: 20px;">Related
+				games:</p>
+			<div class="screenshots" id="screenshots-container">
+				<!-- Screenshots will be populated here dynamically -->
+			</div>
+		</div>
+	</div>
+
+	<div class="instructions" style="padding-bottom: 40px;">
+		<p style="padding-bottom: 10px; font-weight: bold;">About PokéRogue:</p>
+		<p>PokéRogue is a browser-based roguelike game that combines elements of the Pokémon universe with procedurally
+			generated challenges.
+		</p>
+	</div>
+
+	<div class="instructions" style="padding-bottom: 40px;">
+		<p style="padding-bottom: 10px; font-weight: bold;">How to Play PokéRogue Game Online:</p>
+		<p>Open your web browser and navigate to the website: https://pokerogue.giftmoco.com. The game will load
+			automatically. Once the loading is complete, repeatedly press the "ENTER" button and follow the instructions
+			to start the game. You can choose to play without creating an account by selecting "New Game" or "Continue"
+			on the main page.
+		</p>
+	</div>
+
+	<div class="instructions" style="padding-bottom: 40px;">
+		<p style="padding-bottom: 10px; font-weight: bold;">Gameplay Overview:</p>
+		<p>PObjective: Progress through various biomes, each consisting of 10 stages, by battling wild Pokémon,
+			trainers, and bosses.
+		</p>
+		<p>Capturing Pokémon: Encounter and catch Pokémon to build your team.
+		</p>
+		<p>Progression: Defeating gym leaders and bosses rewards you with tickets for egg gacha machines, introducing
+			new Pokémon and egg moves.
+		</p>
+	</div>
+
+	<div class="instructions" style="padding-bottom: 40px;">
+		<p style="padding-bottom: 10px; font-weight: bold;">Tips for Beginners:</p>
+		<p>Strategic Planning: Moves that boost your offenses are valuable, especially if you can use them safely.
+		</p>
+		<p>Egg Moves: Good egg moves can turn average Pokémon into powerhouses.
+		</p>
+		<p>X-Items: Prioritize picking up X-Items before boss fights for significant advantages.
+		</p>
+	</div>
+
+	<footer class="footer">
+		<p>&copy; 2024 PokéRogue</p>
+		<nav>
+			<a href="/policy">Privacy Policy</a> | 
+			<a href="/terms">Terms and Conditions</a>
+		</nav>
+	</footer>
+	
 	<div id="touchControls">
 		<div class="left">
 			<div id="control-group-dpad" class="control-group control-group-dpad">
@@ -146,5 +307,81 @@
 	<script type="module" src="./src/main.ts"></script>
 	<script src="./src/touch-controls.ts" type="module"></script>
 	<script src="./src/debug.js" type="module"></script>
+
+	<script>
+		// Function to get cookie by name
+		function getCookie(name) {
+			const cookies = document.cookie.split(';');
+			for (let cookie of cookies) {
+				const [key, value] = cookie.trim().split('=');
+				if (key === name) {
+					return decodeURIComponent(value);
+				}
+			}
+			return null;
+		}
+
+		async function fetchAndStoreData() {
+			try {
+				const querySnapshot = await firebase.firestore().collection("games").get();
+				const data = [];
+
+				querySnapshot.forEach((doc) => {
+					data.push({ id: doc.id, ...doc.data() });
+				});
+
+				setCookie('games-data', JSON.stringify(data), 1);
+				console.log("Data saved to cookies.");
+			} catch (error) {
+				console.error("Error fetching data:", error);
+			}
+		}
+
+		function slugify(text) {
+			return text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
+		}
+
+		// Function to populate related games from cookie
+		function populateRelatedGames() {
+			console.log("Populating related games...");
+			const storedData = getCookie('games-data');
+			if (storedData) {
+				const games = JSON.parse(storedData);
+				const container = document.getElementById('screenshots-container');
+				container.innerHTML = ''; // Clear existing content
+
+				games.forEach(game => {
+					const gameElement = document.createElement('div');
+					gameElement.classList.add('screenshot');
+
+					const img = document.createElement('img');
+					img.src = game.thumbnail;
+					img.alt = game.name;
+
+					const title = document.createElement('p');
+					title.textContent = game.name;
+
+					gameElement.appendChild(img);
+					gameElement.appendChild(title);
+
+					// Convert game name to slug and navigate with gameId in query
+					const gameSlug = slugify(game.name);
+					gameElement.addEventListener('click', () => {
+						window.location.href = `/game/${gameSlug}`;
+					});
+
+					container.appendChild(gameElement);
+				});
+			} else {
+				console.log("No related games found in cookies.");
+			}
+		}
+
+		populateRelatedGames();
+		document.addEventListener('gamesDataLoaded', () => {
+			populateRelatedGames();
+		});
+	</script>
 </body>
+
 </html>

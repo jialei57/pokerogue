@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokéRogue - Play Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <style type="text/css">
+        @font-face {
+            font-family: 'emerald';
+            src: url('./fonts/pokemon-emerald-pro.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'pkmnems';
+            src: url('./fonts/pkmnems.ttf') format('truetype');
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="/index.css" />
+</head>
+
+<body>
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="/">
+                    <img src="/back-arrow.png" alt="Back to main">
+                </a>
+                <div style="font-size: 22px; font-weight: bold;" id="game-title">PokéRogue</div>
+            </div>
+        </div>
+    </header>
+
+    <div style="width: 80%">
+		<script async
+			src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6954218557768085"
+			crossorigin="anonymous"></script>
+		<!-- top-1 -->
+		<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6954218557768085"
+			data-ad-slot="9558893926" data-ad-format="auto" data-full-width-responsive="true"></ins>
+		<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	</div>
+
+    <div class="content">
+        <div class="game-container">
+            <iframe class="game-frame" id="game-frame" frameborder="0"></iframe>
+        </div>
+    </div>
+
+    <button class="fullscreen-btn" onclick="toggleFullScreen()">
+        <img src="/fullscreen.png" alt="Fullscreen" class="fullscreen-icon">
+    </button>
+
+    <div style="width: 80%">
+		<script async
+			src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6954218557768085"
+			crossorigin="anonymous"></script>
+		<!-- top-1 -->
+		<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6954218557768085"
+			data-ad-slot="9558893926" data-ad-format="auto" data-full-width-responsive="true"></ins>
+		<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	</div>
+
+    <div class="sidebar">
+        <div class="related-games">
+            <p style="font-size: 20px; font-weight: bold; width: 100%; text-align: left; padding-left: 20px;">Related
+                games:</p>
+            <div class="screenshots" id="screenshots-container">
+                <!-- Screenshots will be populated here dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleFullScreen() {
+            const gameContainer = document.getElementById('game-frame');
+            if (!document.fullscreenElement) {
+                if (gameContainer.requestFullscreen) {
+                    gameContainer.requestFullscreen();
+                } else if (gameContainer.mozRequestFullScreen) { // Firefox
+                    gameContainer.mozRequestFullScreen();
+                } else if (gameContainer.webkitRequestFullscreen) { // Chrome, Safari
+                    gameContainer.webkitRequestFullscreen();
+                } else if (gameContainer.msRequestFullscreen) { // IE/Edge
+                    gameContainer.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
+
+        function getGameSlugFromPath() {
+            const pathSegments = window.location.pathname.split('/');
+            return pathSegments[2];
+        }
+
+        function getCookie(name) {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                const [key, value] = cookie.trim().split('=');
+                if (key === name) {
+                    return decodeURIComponent(value);
+                }
+            }
+            return null;
+        }
+
+        async function fetchGameData() {
+            const gameSlug = getGameSlugFromPath();
+            const storedData = getCookie('games-data');
+
+            if (storedData) { 
+                const games = JSON.parse(storedData);
+
+                // Find the game matching the slug
+                const game = games.find(g => g.name.toLowerCase().replace(/\s+/g, '-') === gameSlug);
+
+                if (game) {
+                    const gameId = game.gameId;
+
+                    console.log(`Loading game with ID: ${gameId}`);
+
+                    // Set the game title and iframe dynamically
+                    document.title = game.name;
+                    document.getElementById('game-title').textContent = game.name;
+                    var gameframe = document.getElementById('game-frame');
+                    gameframe.src = `https://html5.gamemonetize.co/${gameId}/`;
+                } else {
+                    document.body.innerHTML = '<h1>Game not found</h1>';
+                }
+            } else {
+                document.body.innerHTML = '<h1>No game data found</h1>';
+            }
+        }
+
+        fetchGameData();
+    </script>
+
+    <script>
+        function slugify(text) {
+            return text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
+        }
+
+        // Function to populate related games from cookie
+        function populateRelatedGames() {
+            const storedData = getCookie('games-data');
+            if (storedData) {
+                const games = JSON.parse(storedData);
+                const container = document.getElementById('screenshots-container');
+                container.innerHTML = ''; // Clear existing content
+
+                const currentGameSlug = getGameSlugFromPath();
+                games.forEach(game => {
+                    const gameSlug = slugify(game.name);
+                    if (gameSlug === currentGameSlug) {
+                        return;  // Skip adding this game to the list
+                    }
+
+                    const gameElement = document.createElement('div');
+                    gameElement.classList.add('screenshot');
+
+                    const img = document.createElement('img');
+                    img.src = game.thumbnail;
+                    img.alt = game.name;
+
+                    const title = document.createElement('p');
+                    title.textContent = game.name;
+
+                    gameElement.appendChild(img);
+                    gameElement.appendChild(title);
+
+                    gameElement.addEventListener('click', () => {
+                        window.location.href = `/game/${gameSlug}`;
+                    });
+
+                    container.appendChild(gameElement);
+                });
+            } else {
+                console.log("No related games found in cookies.");
+            }
+        }
+
+        // Run the function to populate related games
+        populateRelatedGames();
+    </script>
+</body>
+
+</html>

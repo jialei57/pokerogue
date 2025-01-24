@@ -6,7 +6,8 @@ import BBCodeTextPlugin from "phaser3-rex-plugins/plugins/bbcodetext-plugin";
 import InputTextPlugin from "phaser3-rex-plugins/plugins/inputtext-plugin";
 import TransitionImagePackPlugin from "phaser3-rex-plugins/templates/transitionimagepack/transitionimagepack-plugin";
 import { initI18n } from "./plugins/i18n";
-
+import { db } from "./firebase-config";
+import { collection, getDocs } from "firebase/firestore";
 
 // Catch global errors and display them in an alert so users can report the issue.
 window.onerror = function (message, source, lineno, colno, error) {
@@ -108,4 +109,33 @@ fetch("/manifest.json")
     startGame();
   });
 
+// Function to set cookie
+function setCookie(name: string, value: string, days: number) {
+  const expires = new Date();
+  expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+  document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires.toUTCString()}; path=/`;
+}
+
+// Fetch data from Firestore and store it in cookies
+async function fetchAndStoreData() {
+  try {
+    const querySnapshot = await getDocs(collection(db, "games"));
+    const data: { id: string;[key: string]: any }[] = [];
+
+    querySnapshot.forEach((doc) => {
+      data.push({ id: doc.id, ...doc.data() });
+    });
+
+    setCookie("games-data", JSON.stringify(data), 1);
+    console.log("Data saved to cookies.");
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+fetchAndStoreData().then(() => {
+  console.log("Data fetching complete");
+  document.dispatchEvent(new Event("gamesDataLoaded"));
+});
+// Execute when page loads
 export default game;

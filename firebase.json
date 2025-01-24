@@ -1,0 +1,29 @@
+{
+  "hosting": {
+    "public": "dist",
+    "site": "poker-rogue",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/game/**",
+        "destination": "/game.html"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/policy",
+        "destination": "/policy.html"
+      },
+      {
+        "source": "/terms",
+        "destination": "/terms.html"
+      }
+    ]
+  }
+}
