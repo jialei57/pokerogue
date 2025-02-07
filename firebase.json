@@ -13,16 +13,16 @@
         "destination": "/game.html"
       },
       {
-        "source": "**",
-        "destination": "/index.html"
-      },
-      {
         "source": "/policy",
         "destination": "/policy.html"
       },
       {
         "source": "/terms",
         "destination": "/terms.html"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
     ]
   }

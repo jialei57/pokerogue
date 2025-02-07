@@ -534,6 +534,7 @@ body {
 
 .fullscreen-btn {
   margin-top: 20px;
+  margin-bottom: 10px;
   background: none;
   border: none;
   cursor: pointer;
@@ -595,6 +596,8 @@ body {
 .screenshot img {
   width: 100%;
   height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
   border-radius: 15px; /* Rounds the image corners */
 }
 
@@ -607,6 +610,8 @@ body {
 .instructions {
   width: 92%;
   font-size: 14px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .footer {

@@ -34,16 +34,16 @@
     </header>
 
     <div style="width: 80%">
-		<script async
-			src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6954218557768085"
-			crossorigin="anonymous"></script>
-		<!-- top-1 -->
-		<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6954218557768085"
-			data-ad-slot="9558893926" data-ad-format="auto" data-full-width-responsive="true"></ins>
-		<script>
-			(adsbygoogle = window.adsbygoogle || []).push({});
-		</script>
-	</div>
+        <script async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6954218557768085"
+            crossorigin="anonymous"></script>
+        <!-- top-1 -->
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6954218557768085"
+            data-ad-slot="9558893926" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
 
     <div class="content">
         <div class="game-container">
@@ -56,16 +56,33 @@
     </button>
 
     <div style="width: 80%">
-		<script async
-			src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6954218557768085"
-			crossorigin="anonymous"></script>
-		<!-- top-1 -->
-		<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6954218557768085"
-			data-ad-slot="9558893926" data-ad-format="auto" data-full-width-responsive="true"></ins>
-		<script>
-			(adsbygoogle = window.adsbygoogle || []).push({});
-		</script>
-	</div>
+        <script async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6954218557768085"
+            crossorigin="anonymous"></script>
+        <!-- top-1 -->
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6954218557768085"
+            data-ad-slot="9558893926" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <div class="instructions">
+        <p style="padding-bottom: 10px; font-weight: bold; font-size: 16px;">About this game</p>
+        <p style="line-height: 1.4;" id="game-description"></p>
+    </div>
+
+    <div style="width: 80%">
+        <script async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6954218557768085"
+            crossorigin="anonymous"></script>
+        <!-- top-1 -->
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6954218557768085"
+            data-ad-slot="9558893926" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
 
     <div class="sidebar">
         <div class="related-games">
@@ -76,6 +93,8 @@
             </div>
         </div>
     </div>
+
+    <script type="module" src="/src/main.ts"></script>
 
     <script>
         function toggleFullScreen() {
@@ -108,65 +127,51 @@
             return pathSegments[2];
         }
 
-        function getCookie(name) {
-            const cookies = document.cookie.split(';');
-            for (let cookie of cookies) {
-                const [key, value] = cookie.trim().split('=');
-                if (key === name) {
-                    return decodeURIComponent(value);
-                }
-            }
-            return null;
+        function getStoredGames() {
+            const data = localStorage.getItem("games-data")
+            return data ? JSON.parse(data) : null; // Parse JSON or return null if empty
         }
 
         async function fetchGameData() {
             const gameSlug = getGameSlugFromPath();
-            const storedData = getCookie('games-data');
+            const games = getStoredGames();
 
-            if (storedData) { 
-                const games = JSON.parse(storedData);
-
+            if (games) {
                 // Find the game matching the slug
-                const game = games.find(g => g.name.toLowerCase().replace(/\s+/g, '-') === gameSlug);
+                const game = games.find(g => g.slug === gameSlug);
 
                 if (game) {
-                    const gameId = game.gameId;
-
-                    console.log(`Loading game with ID: ${gameId}`);
-
                     // Set the game title and iframe dynamically
                     document.title = game.name;
                     document.getElementById('game-title').textContent = game.name;
                     var gameframe = document.getElementById('game-frame');
-                    gameframe.src = `https://html5.gamemonetize.co/${gameId}/`;
-                } else {
-                    document.body.innerHTML = '<h1>Game not found</h1>';
+
+                    const gameId = game.gameId;
+                    if (gameId != null) {
+                        gameframe.src = `https://html5.gamemonetize.co/${gameId}/`;
+                    }
+                    else {
+                        const gameUrl = game.url;
+                        gameframe.src = gameUrl;
+                    }
+
+                    document.getElementById('game-description').innerHTML = game.description || "Enjoy this fun game!"
                 }
-            } else {
-                document.body.innerHTML = '<h1>No game data found</h1>';
             }
-        }
-
-        fetchGameData();
-    </script>
-
-    <script>
-        function slugify(text) {
-            return text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
         }
 
         // Function to populate related games from cookie
         function populateRelatedGames() {
-            const storedData = getCookie('games-data');
-            if (storedData) {
-                const games = JSON.parse(storedData);
+            console.log("Populating related games...");
+
+            const currentGameSlug = getGameSlugFromPath();
+            const games = getStoredGames();
+            if (games) {
                 const container = document.getElementById('screenshots-container');
                 container.innerHTML = ''; // Clear existing content
 
-                const currentGameSlug = getGameSlugFromPath();
                 games.forEach(game => {
-                    const gameSlug = slugify(game.name);
-                    if (gameSlug === currentGameSlug) {
+                    if (game.slug === currentGameSlug) {
                         return;  // Skip adding this game to the list
                     }
 
@@ -184,7 +189,7 @@
                     gameElement.appendChild(title);
 
                     gameElement.addEventListener('click', () => {
-                        window.location.href = `/game/${gameSlug}`;
+                        window.location.href = `/game/${game.slug}`;
                     });
 
                     container.appendChild(gameElement);
@@ -194,8 +199,13 @@
             }
         }
 
-        // Run the function to populate related games
+        fetchGameData();
         populateRelatedGames();
+        document.addEventListener('gamesDataLoaded', () => {
+            console.log("Games data loaded event received.");
+            fetchGameData();
+            populateRelatedGames();
+        });
     </script>
 </body>
 

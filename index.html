@@ -133,7 +133,7 @@
 		</button>
 	</div>
 
-	<div style="width: 80%">
+	<div style="width: 80%;">
 		<script async
 			src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6954218557768085"
 			crossorigin="anonymous"></script>
@@ -149,7 +149,8 @@
 		<p style="padding-bottom: 10px; font-weight: bold;">Main Game control:</p>
 		<p style="padding-bottom: 4px">Select: Use ENTER or SPACE key to skip dialogue or select the active cursor.</p>
 		<p style="padding-bottom: 4px">Movement: Use the arrow keys or WASD to move your character.</p>
-		<p style="padding-bottom: 4px">Interaction: Press the 'Z' key to interact with objects or confirm selections.</p>
+		<p style="padding-bottom: 4px">Interaction: Press the 'Z' key to interact with objects or confirm selections.
+		</p>
 		<p style="padding-bottom: 4px">Menu Access: Press the 'X' key to cancel actions or open the game menu.</p>
 		<p>Settings: You can customize controls in the Settings menu under Keyboard/Gamepad options.</p>
 	</div>
@@ -218,11 +219,11 @@
 	<footer class="footer">
 		<p>&copy; 2024 PokéRogue</p>
 		<nav>
-			<a href="/policy">Privacy Policy</a> | 
+			<a href="/policy">Privacy Policy</a> |
 			<a href="/terms">Terms and Conditions</a>
 		</nav>
 	</footer>
-	
+
 	<div id="touchControls">
 		<div class="left">
 			<div id="control-group-dpad" class="control-group control-group-dpad">
@@ -310,43 +311,17 @@
 
 	<script>
 		// Function to get cookie by name
-		function getCookie(name) {
-			const cookies = document.cookie.split(';');
-			for (let cookie of cookies) {
-				const [key, value] = cookie.trim().split('=');
-				if (key === name) {
-					return decodeURIComponent(value);
-				}
-			}
-			return null;
-		}
-
-		async function fetchAndStoreData() {
-			try {
-				const querySnapshot = await firebase.firestore().collection("games").get();
-				const data = [];
-
-				querySnapshot.forEach((doc) => {
-					data.push({ id: doc.id, ...doc.data() });
-				});
-
-				setCookie('games-data', JSON.stringify(data), 1);
-				console.log("Data saved to cookies.");
-			} catch (error) {
-				console.error("Error fetching data:", error);
-			}
-		}
-
-		function slugify(text) {
-			return text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
+		function getStoredGames() {
+			const data = localStorage.getItem("games-data");
+			return data ? JSON.parse(data) : null; // Parse JSON or return null if empty
 		}
 
 		// Function to populate related games from cookie
 		function populateRelatedGames() {
 			console.log("Populating related games...");
-			const storedData = getCookie('games-data');
-			if (storedData) {
-				const games = JSON.parse(storedData);
+
+			const games = getStoredGames();
+			if (games) {
 				const container = document.getElementById('screenshots-container');
 				container.innerHTML = ''; // Clear existing content
 
@@ -364,10 +339,8 @@
 					gameElement.appendChild(img);
 					gameElement.appendChild(title);
 
-					// Convert game name to slug and navigate with gameId in query
-					const gameSlug = slugify(game.name);
 					gameElement.addEventListener('click', () => {
-						window.location.href = `/game/${gameSlug}`;
+						window.location.href = `/game/${game.slug}`;
 					});
 
 					container.appendChild(gameElement);
@@ -379,6 +352,7 @@
 
 		populateRelatedGames();
 		document.addEventListener('gamesDataLoaded', () => {
+			console.log("Games data loaded event received.");
 			populateRelatedGames();
 		});
 	</script>
