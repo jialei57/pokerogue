@@ -5,7 +5,8 @@
 	<meta charset="UTF-8" />
 	<title>PokéRogue</title>
 	<meta name="title" content="PokéRogue" />
-	<meta name="description" content="A Pokémon fangame heavily inspired by the roguelite genre. Battle endlessly while gathering stacking items, exploring many different biomes, and reaching Pokémon stats you never thought possible." />
+	<meta name="description"
+		content="A Pokémon fangame heavily inspired by the roguelite genre. Battle endlessly while gathering stacking items, exploring many different biomes, and reaching Pokémon stats you never thought possible." />
 	<meta name="theme-color" content="#da3838" />
 	<meta name="keywords" content="pokerogue, pokemon, roguelite" />
 	<meta name="news_keywords" content="pokerogue, pokemon, roguelite" />
@@ -13,12 +14,14 @@
 	<meta http-equiv="audience" content="General">
 	<meta property="og:title" content="PokéRogue" />
 	<meta property="og:type" content="website" />
-	<meta property="og:description" content="A Pokémon fangame heavily inspired by the roguelite genre. Battle endlessly while gathering stacking items, exploring many different biomes, and reaching Pokémon stats you never thought possible." />
+	<meta property="og:description"
+		content="A Pokémon fangame heavily inspired by the roguelite genre. Battle endlessly while gathering stacking items, exploring many different biomes, and reaching Pokémon stats you never thought possible." />
 	<meta property="og:image" content="https://pokerogue.net/logo512.png" />
 	<meta property="og:url" content="https://pokerogue.net" />
 	<meta property="og:site_name" content="PokéRogue" />
 	<meta property="twitter:title" content="PokéRogue" />
-	<meta property="twitter:description" content="A Pokémon fangame heavily inspired by the roguelite genre. Battle endlessly while gathering stacking items, exploring many different biomes, and reaching Pokémon stats you never thought possible." />
+	<meta property="twitter:description"
+		content="A Pokémon fangame heavily inspired by the roguelite genre. Battle endlessly while gathering stacking items, exploring many different biomes, and reaching Pokémon stats you never thought possible." />
 	<meta property="twitter:image" content="https://pokerogue.net/logo512.png" />
 	<meta property="twitter:card" content="summary" />
 	<meta property="twitter:url" content="https://pokerogue.net" />
@@ -39,25 +42,32 @@
 	</style>
 	<link rel="stylesheet" type="text/css" href="./index.css" />
 	<link rel="manifest" href="./manifest.webmanifest">
-  <script>
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", function () {
-        navigator.serviceWorker.register("./service-worker.js").then(
-          function (registration) {
-            console.log("ServiceWorker registration successful");
-          },
-          function (err) {
-            console.log("ServiceWorker registration failed: ", err);
-          },
-        );
-      });
-    }
+	<script>
+		if ("serviceWorker" in navigator) {
+			window.addEventListener("load", function () {
+				navigator.serviceWorker.register("./service-worker.js").then(
+					function (registration) {
+						console.log("ServiceWorker registration successful");
+					},
+					function (err) {
+						console.log("ServiceWorker registration failed: ", err);
+					},
+				);
+			});
+		}
 
-    window.addEventListener('beforeinstallprompt', e => {
-      // Prevent invasive install prompt (users are still able to install as an app)
-      e.preventDefault();
-    });
-  </script>
+		window.addEventListener('beforeinstallprompt', e => {
+			// Prevent invasive install prompt (users are still able to install as an app)
+			e.preventDefault();
+		});
+	</script>
+	<script>
+		if (window.location.hostname === "pokerogueindex.com" || window.location.hostname === "localhost") {
+			document.body.style.display = "block";
+		} else {
+			window.location.href = "https://pokerogueindex.com/";
+		}
+	</script>
 </head>
 
 <body>
@@ -147,4 +157,5 @@
 	<script src="./src/touch-controls.ts" type="module"></script>
 	<script src="./src/debug.js" type="module"></script>
 </body>
+
 </html>
