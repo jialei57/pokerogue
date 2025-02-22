@@ -6,9 +6,7 @@ import BBCodeTextPlugin from "phaser3-rex-plugins/plugins/bbcodetext-plugin";
 import InputTextPlugin from "phaser3-rex-plugins/plugins/inputtext-plugin";
 import TransitionImagePackPlugin from "phaser3-rex-plugins/templates/transitionimagepack/transitionimagepack-plugin";
 import { initI18n } from "./plugins/i18n";
-import { db } from "./firebase-config";
-import { collection, getDocs } from "firebase/firestore";
-import "../index.css";
+
 
 // Catch global errors and display them in an alert so users can report the issue.
 window.onerror = function (message, source, lineno, colno, error) {
@@ -101,53 +99,13 @@ const startGame = async (manifest?: any) => {
   }
 };
 
-if (window.location.pathname === "/" || window.location.pathname === "/index.html") {
-  fetch("/manifest.json")
-    .then(res => res.json())
-    .then(jsonResponse => {
-      startGame(jsonResponse.manifest);
-    }).catch(() => {
-      // Manifest not found (likely local build)
-      startGame();
-    });
-}
+fetch("/manifest.json")
+  .then(res => res.json())
+  .then(jsonResponse => {
+    startGame(jsonResponse.manifest);
+  }).catch(() => {
+    // Manifest not found (likely local build)
+    startGame();
+  });
 
-async function fetchAndStoreData() {
-  console.log("Fetching game data...");
-
-  const cacheDuration = 10 * 60 * 1000; //Refresh every 10 minutes (adjust as needed)
-  const lastFetchTime = localStorage.getItem("games-data-timestamp");
-
-  // ✅ If the data is fresh, skip fetching
-  if (lastFetchTime && Date.now() - parseInt(lastFetchTime) < cacheDuration) {
-    console.log("Using cached game data.");
-    return;
-  }
-
-  try {
-    const querySnapshot = await getDocs(collection(db, "games"));
-    const data: { id: string;[key: string]: any }[] = [];
-
-    querySnapshot.forEach((doc) => {
-      data.push({ id: doc.id, ...doc.data() });
-    });
-
-    // ✅ Store data in localStorage
-    localStorage.setItem("games-data", JSON.stringify(data));
-    localStorage.setItem("games-data-timestamp", Date.now().toString());
-
-    console.log("Game data saved to localStorage.");
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-}
-
-
-fetchAndStoreData().then(() => {
-  console.log("Data fetching complete");
-  document.dispatchEvent(new Event("gamesDataLoaded"));
-});
-
-
-// Execute when page loads
 export default game;

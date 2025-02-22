@@ -359,6 +359,7 @@ export class LoadingScene extends SceneBase {
     initPokemonForms();
     initTrainerTypeDialogue();
     initSpecies();
+    // exportPokemonDataToCSV();
     initMoves();
     initAbilities();
     initChallenges();

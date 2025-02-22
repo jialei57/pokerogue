@@ -5,14 +5,16 @@
   --color-dark: hsl(0, 0%, 10%);
 }
 
+html {
+  touch-action: none;
+}
+
 body {
   margin: 0;
-  display: flex;
+  display:flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(135deg, #83037f, #08214d, #4a90e2);
-  background-attachment: fixed;
-  color: white; /* Ensure text is readable */
+  background: #484050;
 }
 
 @media (display-mode: fullscreen) {
@@ -27,7 +29,7 @@ body {
   align-items: center;
 }
 
-#app>div:first-child {
+#app > div:first-child {
   transform-origin: center !important;
 }
 
@@ -46,19 +48,17 @@ body {
 }
 
 @media (pointer: coarse) {
-
   /* hasTouchscreen() && !isTouchControlsEnabled */
   body:has(> #touchControls[class=visible]) #app {
     align-items: start;
   }
 
-  body:has(> #touchControls[class=visible]) #app>div:first-child {
+  body:has(> #touchControls[class=visible]) #app > div:first-child {
     transform-origin: top !important;
   }
 }
 
-#layout:fullscreen #dpad,
-#layout:fullscreen {
+#layout:fullscreen #dpad, #layout:fullscreen {
   bottom: 6rem;
 }
 
@@ -164,14 +164,14 @@ input:-internal-autofill-selected {
 }
 
 /* Show cycle buttons only on STARTER_SELECT and on touch configuration panel */
-#touchControls:not(.config-mode):not([data-ui-mode='STARTER_SELECT']) #apadOpenFilters,
-#touchControls:not(.config-mode):not([data-ui-mode='STARTER_SELECT'], [data-ui-mode='RUN_INFO']) #apadCycleForm,
-#touchControls:not(.config-mode):not([data-ui-mode='STARTER_SELECT'], [data-ui-mode='RUN_INFO']) #apadCycleShiny,
+#touchControls:not(.config-mode):not([data-ui-mode='STARTER_SELECT'], [data-ui-mode='POKEDEX'], [data-ui-mode='POKEDEX_PAGE']) #apadOpenFilters,
+#touchControls:not(.config-mode):not([data-ui-mode='STARTER_SELECT'], [data-ui-mode='POKEDEX'], [data-ui-mode='POKEDEX_PAGE'], [data-ui-mode='RUN_INFO']) #apadCycleForm,
+#touchControls:not(.config-mode):not([data-ui-mode='STARTER_SELECT'], [data-ui-mode='POKEDEX'], [data-ui-mode='POKEDEX_PAGE'], [data-ui-mode='RUN_INFO']) #apadCycleShiny,
 #touchControls:not(.config-mode):not([data-ui-mode='STARTER_SELECT']) #apadCycleNature,
-#touchControls:not(.config-mode):not([data-ui-mode='STARTER_SELECT'], [data-ui-mode='RUN_INFO']) #apadCycleAbility,
-#touchControls:not(.config-mode):not([data-ui-mode='STARTER_SELECT']) #apadCycleGender,
-#touchControls:not(.config-mode):not([data-ui-mode='STARTER_SELECT']) #apadCycleVariant {
-  display: none;
+#touchControls:not(.config-mode):not([data-ui-mode='STARTER_SELECT'], [data-ui-mode='POKEDEX_PAGE'], [data-ui-mode='RUN_INFO']) #apadCycleAbility,
+#touchControls:not(.config-mode):not([data-ui-mode='STARTER_SELECT'], [data-ui-mode='POKEDEX_PAGE']) #apadCycleGender,
+#touchControls:not(.config-mode):not([data-ui-mode='STARTER_SELECT'], [data-ui-mode='POKEDEX']) #apadCycleVariant {
+ display: none;
 }
 
 /* Configuration toolbar */
@@ -268,7 +268,7 @@ input:-internal-autofill-selected {
   margin-right: -2px;
 }
 
-.apad-small>.apad-label {
+.apad-small > .apad-label {
   font-size: var(--small-control-size);
   text-shadow: var(--color-dark) calc(var(--text-shadow-size) / 3) calc(var(--text-shadow-size) / 3);
 }
@@ -320,8 +320,7 @@ input:-internal-autofill-selected {
 
 /* Layout */
 
-#layout:fullscreen #dpad,
-#layout:fullscreen #apad {
+#layout:fullscreen #dpad, #layout:fullscreen #apad {
   bottom: 6rem;
 }
 
@@ -329,17 +328,14 @@ input:-internal-autofill-selected {
   -webkit-background-clip: text;
   background-clip: text;
 }
-
 #banner {
   display: none;
   position: absolute;
   top: 33.2%;
   left: 0;
   text-align: center;
-  z-index: 1000;
-
-  /* Ensures the banner is on top of other elements */
-  &>img {
+  z-index: 1000; /* Ensures the banner is on top of other elements */
+  & > img {
     opacity: 50%;
   }
 }
@@ -357,327 +353,55 @@ a {
 
 /* Firefox old*/
 @-moz-keyframes blink {
-  0% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
+    0% {
+        opacity:1;
+    }
+    50% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
 }
 
 @-webkit-keyframes blink {
-  0% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
+    0% {
+        opacity:1;
+    }
+    50% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
 }
-
 /* IE */
 @-ms-keyframes blink {
-  0% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
+    0% {
+        opacity:1;
+    }
+    50% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
 }
-
 /* Opera and prob css3 final iteration */
 @keyframes blink {
-  0% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
+    0% {
+        opacity:1;
+    }
+    50% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
 }
-
 .blink-image {
-  -moz-animation: blink normal 4s infinite ease-in-out;
-  /* Firefox */
-  -webkit-animation: blink normal 4s infinite ease-in-out;
-  /* Webkit */
-  -ms-animation: blink normal 4s infinite ease-in-out;
-  /* IE */
-  animation: blink normal 4s infinite ease-in-out;
-  /* Opera and prob css3 final iteration */
-}
-
-/* General styling */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.navbar {
-  width: 100%;
-  background-color: #282626;
-  color: white;
-  padding: 10px 0px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.logo img {
-  height: 40px;
-  /* Adjust size as needed */
-  width: 40px;
-}
-
-.navbar .container {
-  width: 95%;
-  display: flex;
-  height: 46px;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.navbar h1 {
-  font-size: 24px;
-}
-
-.navbar nav ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-}
-
-.navbar nav ul li a {
-  text-decoration: none;
-  color: white;
-  font-weight: bold;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  background-color: #f4f4f4;
-}
-
-.toolbar {
-  width: 100%;
-  color: white;
-  padding: 20px;
-  text-align: center;
-  font-size: 24px;
-}
-
-.content {
-  display: flex;
-  justify-content: center;
-  width: 95%;
-  margin-top: 20px;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.game-container {
-  flex: 3;
-  width: 95%;
-  aspect-ratio: 16 / 9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 24px;
-  max-width: 1200px;
-  max-height: 100vh;
-  flex-direction: column;
-}
-
-.game-frame {
-  width: 100%;
-  height: 100%;
-  display: block;
-  border: 5px solid #ffcc00; /* Yellow border */
-  border-radius: 10px; /* Optional: Add rounded corners */
-}
-
-.back-link::before {
-  font-size: 20px;
-  margin-right: 5px;
-}
-
-.fullscreen-btn {
-  margin-top: 20px;
-  margin-bottom: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  transition: opacity 0.3s ease;
-}
-
-.fullscreen-btn:hover {
-  opacity: 0.8;
-}
-
-.fullscreen-icon {
-  width: 40px;  /* Adjust size as needed */
-  height: 40px;
-}
-
-.sidebar {
-  flex: 1;
-  display: flex;
-  width: 70%;
-  flex-direction: column;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  gap: 20px;
-  align-items: center;
-}
-
-.ads {
-  width: 100%;
-  max-width: 300px;
-  height: 200px;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  text-align: center;
-}
-
-.related-games {
-  width: 95%;
-  text-align: center;
-}
-
-.screenshots {
-  display: grid;
-  padding: 14px;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 10px;
-  justify-content: center;
-}
-
-.screenshot {
-  text-align: center;
-  background-color: transparent;
-  overflow: hidden; /* Ensure content inside follows the rounded shape */
-}
-
-.screenshot img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: 15px; /* Rounds the image corners */
-}
-
-.screenshot p {
-  margin-top: 5px;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.instructions {
-  width: 92%;
-  font-size: 14px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.footer {
-  background-color: #1d6bc4;  /* Dark background color */
-  color: #ffffff;          /* White text */
-  text-align: center;
-  padding: 20px 0;
-  font-size: 15px;
-  width: 100%;
-  font-family: Arial, sans-serif;
-}
-
-.footer nav {
-  margin-top: 10px;
-}
-
-.footer a {
-  color: #ffffff;
-  text-decoration: none;
-  font-weight: bold;
-  margin: 0 10px;
-}
-
-.footer a:hover {
-  text-decoration: underline;
-}
-
-
-/* Responsive Layout */
-@media (max-width: 1800px) {
-  .content {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .game-container {
-    width: 100%;
-  }
-
-  .sidebar {
-    width: 100%;
-  }
-
-  @media (max-width: 1600px) and (min-width: 1200px) {
-    .screenshots {
-      grid-template-columns: repeat(5, 1fr);
-    }
-  }
-
-  @media (max-width: 1200px) and (min-width: 900px) {
-    .screenshots {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-  /* Adjust for medium screens */
-  @media (max-width: 900px) and (min-width: 600px) {
-    .screenshots {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  /* Adjust for smaller screens */
-  @media (max-width: 600px) {
-    .screenshots {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
+    -moz-animation: blink normal 4s infinite ease-in-out; /* Firefox */
+    -webkit-animation: blink normal 4s infinite ease-in-out; /* Webkit */
+    -ms-animation: blink normal 4s infinite ease-in-out; /* IE */
+    animation: blink normal 4s infinite ease-in-out; /* Opera and prob css3 final iteration */
 }

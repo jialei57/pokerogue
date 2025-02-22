@@ -502,7 +502,7 @@ export abstract class PokemonSpeciesForm {
       globalScene.load.once(Phaser.Loader.Events.COMPLETE, () => {
         const originalWarn = console.warn;
         // Ignore warnings for missing frames, because there will be a lot
-        console.warn = () => {};
+        console.warn = () => { };
         const frameNames = globalScene.anims.generateFrameNames(spriteKey, { zeroPad: 4, suffix: ".png", start: 1, end: 400 });
         console.warn = originalWarn;
         if (!(globalScene.anims.exists(spriteKey))) {
@@ -663,6 +663,36 @@ export default class PokemonSpecies extends PokemonSpeciesForm implements Locali
     }
     return this.name;
   }
+
+  // getName2(formIndex?: number): string {
+  //   if (formIndex !== undefined && this.forms.length) {
+  //     const form = this.forms[formIndex];
+  //     let key: string | null;
+  //     switch (form.formKey) {
+  //       case SpeciesFormKey.MEGA:
+  //       case SpeciesFormKey.PRIMAL:
+  //       case SpeciesFormKey.ETERNAMAX:
+  //       case SpeciesFormKey.MEGA_X:
+  //       case SpeciesFormKey.MEGA_Y:
+  //         key = form.formKey;
+  //         break;
+  //       default:
+  //         if (form.formKey.indexOf(SpeciesFormKey.GIGANTAMAX) > -1) {
+  //           key = "gigantamax";
+  //         } else {
+  //           key = null;
+  //         }
+  //     }
+
+  //     if (key) {
+  //       return i18next.t(`battlePokemonForm:${key}`, { pokemonName: this.name });
+  //     }
+  //     else if (form.formKey !== "") {
+  //       return this.name + " " + form.formKey.charAt(0).toUpperCase() + form.formKey.slice(1);
+  //     }
+  //   }
+  //   return this.name;
+  // }
 
   localize(): void {
     this.name = i18next.t(`pokemon:${Species[this.speciesId].toLowerCase()}`);
@@ -2759,7 +2789,7 @@ export function initSpecies() {
   /*for (let tc of Object.keys(trainerConfigs)) {
       console.log(TrainerType[tc], !trainerConfigs[tc].speciesFilter ? 'all' : [...new Set(allSpecies.filter(s => s.generation <= 9).filter(trainerConfigs[tc].speciesFilter).map(s => {
         while (pokemonPrevolutions.hasOwnProperty(s.speciesId))
-				  s = getPokemonSpecies(pokemonPrevolutions[s.speciesId]);
+          s = getPokemonSpecies(pokemonPrevolutions[s.speciesId]);
         return s;
       }))].map(s => s.name));
     }
@@ -2771,4 +2801,70 @@ export function initSpecies() {
       return s;
     }))].map(s => s.name));*/
   //}, 1000);
+}
+
+
+export function exportPokemonDataToCSV(): void {
+  const pokemonData: string[][] = [];
+
+  allSpecies.forEach(species => {
+    if (species.forms && species.forms.length > 0) {
+      species.forms.forEach(form => {
+        pokemonData.push([
+          species.speciesId.toString(),
+          Species[species.speciesId].toString(),
+          species.name,
+          form.formKey, // Base species name
+          form.type1.toString(),
+          form.type2?.toString() || "",
+          form.ability1.toString(),
+          form.ability2?.toString() || "",
+          form.abilityHidden?.toString() || "",
+          form.baseTotal.toString(),
+          form.baseStats[0].toString(),
+          form.baseStats[1].toString(),
+          form.baseStats[2].toString(),
+          form.baseStats[3].toString(),
+          form.baseStats[4].toString(),
+          form.baseStats[5].toString(),
+        ]);
+      });
+    } else {
+      pokemonData.push([
+        species.speciesId.toString(), // Base species name
+        Species[species.speciesId].toString(),
+        species.name,
+        "",
+        species.type1.toString(),
+        species.type2?.toString() || "",
+        species.ability1.toString(),
+        species.ability2?.toString() || "",
+        species.abilityHidden?.toString() || "",
+        species.baseTotal.toString(),
+        species.baseStats[0].toString(),
+        species.baseStats[1].toString(),
+        species.baseStats[2].toString(),
+        species.baseStats[3].toString(),
+        species.baseStats[4].toString(),
+        species.baseStats[5].toString(),
+      ]);
+    }
+  });
+
+  const columns = [ "ID", "Species", "Name", "Form Key", "Type 1", "Type 2", "Ability 1", "Ability 2", "Ability Hidden",
+    "BST", "HP", "Attack", "Defense", "Sp. Atk", "Sp. Def", "Speed" ];
+
+  // const csvContent = [columns.join(","), ...pokemonData.map(row => row.join(","))].join("\n");
+  const csvContent = "\uFEFF" + [ columns.join(","), ...pokemonData.map(row => row.join(",")) ].join("\n");
+
+  // Create a Blob for CSV download
+  const blob = new Blob([ csvContent ], { type: "text/csv" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "output.csv";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  console.log("CSV file generated and ready for download.");
 }
