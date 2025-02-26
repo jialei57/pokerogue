@@ -2815,6 +2815,7 @@ export function exportPokemonDataToCSV(): void {
           Species[species.speciesId].toString(),
           species.name,
           form.formKey, // Base species name
+          form.generation.toString(),
           form.type1.toString(),
           form.type2?.toString() || "",
           form.ability1.toString(),
@@ -2835,6 +2836,7 @@ export function exportPokemonDataToCSV(): void {
         Species[species.speciesId].toString(),
         species.name,
         "",
+        species.generation.toString(),
         species.type1.toString(),
         species.type2?.toString() || "",
         species.ability1.toString(),
@@ -2851,7 +2853,7 @@ export function exportPokemonDataToCSV(): void {
     }
   });
 
-  const columns = [ "ID", "Species", "Name", "Form Key", "Type 1", "Type 2", "Ability 1", "Ability 2", "Ability Hidden",
+  const columns = [ "ID", "Species", "Name", "Form Key", "Generation", "Type 1", "Type 2", "Ability 1", "Ability 2", "Ability Hidden",
     "BST", "HP", "Attack", "Defense", "Sp. Atk", "Sp. Def", "Speed" ];
 
   // const csvContent = [columns.join(","), ...pokemonData.map(row => row.join(","))].join("\n");
